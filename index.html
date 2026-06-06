@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Si UCuP — Sistem Usulan Cuti Praktis Pegawai Non ASN Puskesmas Banjarbaru Selatan. Ajukan izin atau cuti secara digital dengan mudah dan cepat." />
+  <meta name="theme-color" content="#1B5E20" />
+  <title>Si UCuP — Sistem Usulan Cuti Praktis | Puskesmas Banjarbaru Selatan</title>
+
+  <!-- Favicon emoji fallback -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></svg>" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- ============ LOADING OVERLAY ============ -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">
+      Mengirim Permohonan...
+      <div class="loading-sub">Mohon tunggu sebentar</div>
+    </div>
+  </div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="header-badge">Puskesmas Banjarbaru Selatan</div>
+    <img
+      src="assets/logo-sicuup.png"
+      alt="Logo Si UCuP"
+      class="header-logo"
+      onerror="this.style.display='none'"
+    />
+    <h1>
+      Si UCuP
+      <span>Sistem Usulan Cuti Praktis</span>
+    </h1>
+    <p>Formulir Pengajuan Izin & Cuti — Pegawai Non ASN</p>
+
+    <!-- Wave divider -->
+    <div class="header-wave">
+      <svg viewBox="0 0 1200 36" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,24 C200,40 400,4 600,20 C800,36 1000,8 1200,24 L1200,36 L0,36 Z" fill="#F1F5F0"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main-container">
+
+    <!-- ===== FORM PAGE ===== -->
+    <div id="page-form">
+
+      <!-- Info Banner -->
+      <div class="info-banner animate-in delay-1">
+        <span class="info-icon">ℹ️</span>
+        <p>
+          <strong>Cara Penggunaan</strong>
+          Isi formulir di bawah dengan lengkap dan benar. Setelah berhasil, Anda akan diarahkan untuk mengirim notifikasi ke WhatsApp Pengelola Absen dan Kepala TU.
+        </p>
+      </div>
+
+      <!-- ===== CARD 1: Data Pegawai ===== -->
+      <div class="form-card animate-in delay-1">
+        <div class="card-header">
+          <div class="card-icon">👤</div>
+          <div class="card-header-text">
+            <h2>Data Pegawai</h2>
+            <p>Informasi identitas pegawai pengaju izin</p>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group">
+            <label for="nama">Nama Lengkap <span class="required">*</span></label>
+            <input
+              type="text"
+              id="nama"
+              class="form-control"
+              placeholder="Masukkan nama lengkap Anda"
+              maxlength="100"
+              autocomplete="name"
+            />
+            <div class="error-msg" id="err-nama">⚠️ Nama lengkap wajib diisi.</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nrtk">
+                NRTK
+                <span class="hint">(Nomor Registrasi)</span>
+                <span class="required">*</span>
+              </label>
+              <input
+                type="text"
+                id="nrtk"
+                class="form-control"
+                placeholder="Contoh: 12345"
+                maxlength="30"
+              />
+              <div class="error-msg" id="err-nrtk">⚠️ NRTK wajib diisi.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="jabatan">Jabatan <span class="required">*</span></label>
+              <input
+                type="text"
+                id="jabatan"
+                class="form-control"
+                placeholder="Contoh: Perawat"
+                maxlength="80"
+              />
+              <div class="error-msg" id="err-jabatan">⚠️ Jabatan wajib diisi.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== CARD 2: Permohonan Izin ===== -->
+      <div class="form-card animate-in delay-2">
+        <div class="card-header">
+          <div class="card-icon">📋</div>
+          <div class="card-header-text">
+            <h2>Permohonan Izin / Cuti</h2>
+            <p>Pilih jenis izin dan tentukan tanggalnya</p>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <!-- Jenis Izin -->
+          <div class="form-group">
+            <label>Jenis Izin / Cuti <span class="required">*</span></label>
+            <div class="izin-grid" id="jenisIzinGroup">
+
+              <!-- Opsi 1: Keperluan -->
+              <div class="izin-option">
+                <input type="radio" name="jenisIzin" id="izin-keperluan" value="Izin Keperluan" />
+                <label class="izin-label" for="izin-keperluan">
+                  <div class="izin-icon keperluan">🏠</div>
+                  <div class="izin-text">
+                    <strong>Izin Keperluan</strong>
+                    <small>Keperluan pribadi/keluarga</small>
+                  </div>
+                  <div class="izin-check"></div>
+                </label>
+              </div>
+
+              <!-- Opsi 2: Sakit -->
+              <div class="izin-option">
+                <input type="radio" name="jenisIzin" id="izin-sakit" value="Izin Sakit" />
+                <label class="izin-label" for="izin-sakit">
+                  <div class="izin-icon sakit">🏥</div>
+                  <div class="izin-text">
+                    <strong>Izin Sakit</strong>
+                    <small>Butuh surat jika &gt;1 hari</small>
+                  </div>
+                  <div class="izin-check"></div>
+                </label>
+              </div>
+
+              <!-- Opsi 3: Melahirkan -->
+              <div class="izin-option">
+                <input type="radio" name="jenisIzin" id="izin-melahirkan" value="Izin Melahirkan" />
+                <label class="izin-label" for="izin-melahirkan">
+                  <div class="izin-icon melahirkan">👶</div>
+                  <div class="izin-text">
+                    <strong>Izin Melahirkan</strong>
+                    <small>Cuti melahirkan / persalinan</small>
+                  </div>
+                  <div class="izin-check"></div>
+                </label>
+              </div>
+
+              <!-- Opsi 4: Lainnya -->
+              <div class="izin-option">
+                <input type="radio" name="jenisIzin" id="izin-lainnya" value="Izin Lainnya" />
+                <label class="izin-label" for="izin-lainnya">
+                  <div class="izin-icon lainnya">✏️</div>
+                  <div class="izin-text">
+                    <strong>Izin Lainnya</strong>
+                    <small>Isi keterangan manual</small>
+                  </div>
+                  <div class="izin-check"></div>
+                </label>
+              </div>
+
+            </div>
+            <div class="error-msg" id="err-jenisIzin">⚠️ Pilih jenis izin/cuti terlebih dahulu.</div>
+
+            <!-- Field Izin Lainnya (muncul jika pilih "Izin Lainnya") -->
+            <div class="izin-lainnya-field" id="izinLainnyaField">
+              <label for="keteranganIzin">Keterangan Izin Lainnya <span class="required">*</span></label>
+              <input
+                type="text"
+                id="keteranganIzin"
+                class="form-control"
+                placeholder="Jelaskan jenis izin Anda..."
+                maxlength="200"
+              />
+              <div class="error-msg" id="err-keteranganIzin">⚠️ Keterangan izin wajib diisi.</div>
+            </div>
+
+            <!-- Peringatan Izin Sakit -->
+            <div class="sakit-warning" id="sakitWarning">
+              <span>⚠️</span>
+              <span><strong>Perhatian:</strong> Jika izin sakit lebih dari 1 hari, <u>wajib melampirkan surat sakit</u> dari dokter di bagian upload di bawah.</span>
+            </div>
+          </div>
+
+          <!-- Tanggal -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="tglMulai">Tanggal Mulai <span class="required">*</span></label>
+              <input
+                type="date"
+                id="tglMulai"
+                class="form-control"
+              />
+              <div class="error-msg" id="err-tglMulai">⚠️ Tanggal mulai wajib diisi.</div>
+            </div>
+            <div class="form-group">
+              <label for="tglAkhir">Tanggal Akhir <span class="required">*</span></label>
+              <input
+                type="date"
+                id="tglAkhir"
+                class="form-control"
+              />
+              <div class="error-msg" id="err-tglAkhir">⚠️ Tanggal akhir wajib diisi.</div>
+            </div>
+          </div>
+
+          <!-- Durasi auto-hitung -->
+          <div class="durasi-badge" id="durasiBadge">
+            <span>📅</span>
+            <div>
+              <span class="days-count" id="daysCount">0</span>
+              <strong id="daysLabel"> hari izin</strong>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:2px" id="daysRange"></div>
+            </div>
+          </div>
+          <div class="error-msg" id="err-tanggal">⚠️ Tanggal akhir tidak boleh sebelum tanggal mulai.</div>
+
+        </div>
+      </div>
+
+      <!-- ===== CARD 3: Upload Dokumen ===== -->
+      <div class="form-card animate-in delay-3">
+        <div class="card-header">
+          <div class="card-icon">📎</div>
+          <div class="card-header-text">
+            <h2>Unggah Dokumen Pendukung</h2>
+            <p>Surat sakit, surat keterangan, atau dokumen lain</p>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group">
+            <label>
+              Bukti / Surat Pendukung
+              <span class="hint" id="uploadHintLabel">(opsional)</span>
+            </label>
+            <div class="upload-area" id="uploadArea">
+              <input
+                type="file"
+                id="fileInput"
+                class="upload-input"
+                accept="image/*,.pdf,.doc,.docx"
+              />
+              <span class="upload-icon" id="uploadIcon">📂</span>
+              <div class="upload-title" id="uploadTitle">Klik atau seret file ke sini</div>
+              <div class="upload-sub" id="uploadSub">
+                Format: JPG, PNG, PDF, DOC &nbsp;|&nbsp; Maks. <strong>10 MB</strong>
+              </div>
+            </div>
+
+            <!-- File preview -->
+            <div class="file-preview" id="filePreview">
+              <span class="file-preview-icon" id="filePreviewIcon">📄</span>
+              <div class="file-preview-info">
+                <div class="file-preview-name" id="filePreviewName">nama-file.pdf</div>
+                <div class="file-preview-size" id="filePreviewSize">0 KB</div>
+              </div>
+              <button type="button" class="file-remove-btn" id="fileRemoveBtn" title="Hapus file">×</button>
+            </div>
+
+            <div class="upload-required-note" id="uploadRequired">
+              ⚠️ Surat sakit wajib dilampirkan jika izin sakit lebih dari 1 hari.
+            </div>
+            <div class="error-msg" id="err-upload">⚠️ Harap unggah surat sakit (izin sakit &gt;1 hari wajib).</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ===== CARD 4: Keterangan ===== -->
+      <div class="form-card animate-in delay-4">
+        <div class="card-header">
+          <div class="card-icon">✍️</div>
+          <div class="card-header-text">
+            <h2>Keterangan Tambahan</h2>
+            <p>Informasi lain yang perlu disampaikan (opsional)</p>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="keterangan">Keterangan <span class="hint">(opsional)</span></label>
+            <textarea
+              id="keterangan"
+              class="form-control"
+              placeholder="Contoh: Kondisi kesehatan memburuk, akan memeriksakan diri ke RS Ulin..."
+              maxlength="500"
+              rows="3"
+            ></textarea>
+            <div class="char-counter"><span id="keteranganCount">0</span>/500</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SUBMIT ===== -->
+      <div class="submit-section animate-in delay-5">
+        <button type="button" class="submit-btn" id="submitBtn" onclick="submitForm()">
+          <span class="submit-icon">📤</span>
+          Kirim Permohonan Izin
+        </button>
+        <div class="submit-note">
+          Dengan mengirim formulir ini, Anda menyatakan bahwa data yang diisi adalah benar.
+        </div>
+      </div>
+
+    </div><!-- end #page-form -->
+
+    <!-- ===== SUCCESS PAGE ===== -->
+    <div id="page-success">
+
+      <div class="success-hero animate-in">
+        <div class="success-checkmark">✅</div>
+        <h2>Permohonan Terkirim!</h2>
+        <p>Data Anda telah berhasil tersimpan. Silakan kirimkan notifikasi ke WhatsApp berikut untuk memproses permohonan izin Anda.</p>
+      </div>
+
+      <!-- Ringkasan Data -->
+      <div class="summary-card animate-in delay-1">
+        <div class="summary-header">
+          📋 Ringkasan Permohonan
+        </div>
+        <div class="summary-body" id="summaryBody">
+          <!-- Diisi oleh JavaScript -->
+        </div>
+      </div>
+
+      <!-- Tombol WhatsApp -->
+      <div class="wa-section animate-in delay-2">
+        <h3>💬 Kirim Notifikasi WhatsApp</h3>
+        <p>Tekan tombol di bawah untuk membuka WhatsApp dan kirim pesan notifikasi izin Anda kepada:</p>
+
+        <a
+          href="#"
+          id="waBtn1"
+          class="wa-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div class="wa-btn-icon">💬</div>
+          <div class="wa-btn-info">
+            <span class="wa-btn-title">Pengelola Absen</span>
+            <span class="wa-btn-sub">0852-5168-6868 • Kirim permohonan izin</span>
+          </div>
+          <span class="wa-btn-arrow">→</span>
+        </a>
+
+        <a
+          href="#"
+          id="waBtn2"
+          class="wa-btn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div class="wa-btn-icon">💬</div>
+          <div class="wa-btn-info">
+            <span class="wa-btn-title">Kepala Tata Usaha</span>
+            <span class="wa-btn-sub">0812-5103-3993 • Kirim permohonan izin</span>
+          </div>
+          <span class="wa-btn-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- Tombol Buat Permohonan Baru -->
+      <button type="button" class="new-form-btn" onclick="resetForm()">
+        ↩ Ajukan Permohonan Lain
+      </button>
+
+    </div><!-- end #page-success -->
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <strong>Si UCuP</strong> — Sistem Usulan Cuti Praktis<br />
+    Pegawai Non ASN • <strong>Puskesmas Banjarbaru Selatan</strong><br />
+    <span style="opacity:0.6;">© 2025 • Dibuat untuk kemudahan pelayanan internal</span>
+  </footer>
+
+  <!-- Script -->
+  <script src="js/script.js"></script>
+</body>
+</html>
